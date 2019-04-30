@@ -13,14 +13,15 @@
             android:name=".activity.SplashActivity"
             android:noHistory="true"
             android:screenOrientation="portrait"
-            android:theme="@style/NoActionBar">
-                <intent-filter>
-                    <action android:name="android.intent.action.MAIN" />
+            android:theme="@style/AppTheme.Dark">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-                    <category android:name="android.intent.category.LAUNCHER" />
-                </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-        <activity android:name=".activity.LoginActivity"></activity>
+        <activity android:name=".activity.LoginActivity" android:theme="@style/AppTheme.Dark" />
+        <activity android:name=".activity.HomeActivity"></activity>
     </application>
 
 </manifest>

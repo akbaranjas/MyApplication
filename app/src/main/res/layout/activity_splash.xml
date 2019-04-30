@@ -9,7 +9,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimary">
+        android:background="@color/primary">
         <ProgressBar
             android:id="@+id/splashProgressBar"
             android:layout_width="wrap_content"
@@ -26,7 +26,8 @@
             android:layout_centerInParent="true"
             android:layout_centerVertical="true"
             android:layout_below="@+id/splashProgressBar"
-            android:layout_marginTop="5dp"/>
+            android:layout_marginTop="5dp"
+            android:textColor="@color/white"/>
     </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

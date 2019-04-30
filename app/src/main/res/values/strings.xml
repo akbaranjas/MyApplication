@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">My Application</string>
     <string name="text.loading">Loading. . .</string>
+    <string name="text.login">Login</string>
+    <string name="text.email">Email</string>
+    <string name="text.password">Password</string>
 </resources>
