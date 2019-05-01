@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'realm-android'
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -9,7 +9,9 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        buildConfigField "String", "BASE_URL", "\"http://apps.ahafidz.com/api/auth/\""
+        buildConfigField "String", "BASE_URL", "\"http://apps.ahafidz.com/api/\""
+        buildConfigField "String", "DB_NAME" , "\"my-app.db\""
+        buildConfigField "Integer", "SCHEMA_VERSION", "0"
     }
     buildTypes {
         release {
