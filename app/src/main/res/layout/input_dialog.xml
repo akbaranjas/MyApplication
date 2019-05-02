@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintRight_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="40dp"
+            android:background="@drawable/custom_bg">
+
+            <TextView
+                android:id="@+id/txt_dialog_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_size"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:text="Input Data"
+                />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/til_kode"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:paddingTop="10dp"
+                app:hintTextAppearance="@style/TextAppearence.TextInputLayout"
+                android:textColorHint="@color/primary_darker">
+                <EditText
+                    android:id="@+id/text_kode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:hint="@string/txt_kode"
+                    android:inputType="text"
+                    android:layout_marginLeft="22dp"
+                    android:layout_marginRight="22dp"
+                    android:theme="@style/AppTheme"
+                    android:textSize="12sp"
+                    android:textColor="@color/black"
+                    android:maxLength="20"
+                    android:textAllCaps="true"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/til_nama"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:paddingTop="10dp"
+                app:hintTextAppearance="@style/TextAppearence.TextInputLayout"
+                android:textColorHint="@color/primary_darker">
+                <EditText
+                    android:id="@+id/text_nama"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/txt_nama"
+                    android:inputType="text"
+                    android:layout_marginLeft="22dp"
+                    android:layout_marginRight="22dp"
+                    android:theme="@style/AppTheme"
+                    android:textSize="12sp"
+                    android:textColor="@color/black"
+                    android:textAllCaps="true"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/til_keterangan"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:paddingTop="10dp"
+                app:hintTextAppearance="@style/TextAppearence.TextInputLayout"
+                android:textColorHint="@color/primary_darker">
+                <EditText
+                    android:id="@+id/text_keterangan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/txt_keterangan"
+                    android:inputType="text"
+                    android:layout_marginLeft="22dp"
+                    android:layout_marginRight="22dp"
+                    android:theme="@style/AppTheme"
+                    android:textSize="12sp"
+                    android:textColor="@color/black"
+                    android:textAllCaps="true"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_submit"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="22dp"
+                    android:layout_marginStart="22dp"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/txt_simpan"
+                    android:textSize="12sp"
+                    android:theme="@style/AppTheme.Button"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    />
+
+                <Button
+                    android:id="@+id/btn_cancel"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="22dp"
+                    android:layout_marginEnd="22dp"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/txt_batal"
+                    android:textSize="12sp"
+                    android:theme="@style/AppTheme.Button"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

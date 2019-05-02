@@ -8,7 +8,7 @@ public class Record {
 
     @SerializedName("id")
     @Expose
-    private String id;
+    private Integer id;
     @SerializedName("kode")
     @Expose
     private String kode;
@@ -31,15 +31,15 @@ public class Record {
     @Expose
     private String tglDirubah;
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public Record withId(String id) {
+    public Record withId(Integer id) {
         this.id = id;
         return this;
     }

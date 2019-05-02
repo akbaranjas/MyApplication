@@ -9,4 +9,6 @@ public interface HomeView {
     void hideLoading();
     void showList(List<Record> records);
     void showError(String message);
+    void logout();
+    void onSuccess(String message);
 }

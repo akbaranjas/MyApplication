@@ -4,4 +4,16 @@
     <string name="text_login">Login</string>
     <string name="text_email">Email</string>
     <string name="text_password">Password</string>
+    <string name="txt_logout">Logout</string>
+    <string name="text_are_you_sure">Apakah anda yakin?</string>
+    <string name="text_yes">Yes</string>
+    <string name="text_no">No</string>
+    <string name="txt_kode">Kode</string>
+    <string name="txt_simpan">Simpan</string>
+    <string name="txt_nama">Nama</string>
+    <string name="txt_keterangan">Keterangan</string>
+    <string name="txt_batal">Batal</string>
+    <string name="txt_ubah">Ubah</string>
+    <string name="txt_hapus">Hapus</string>
+    <string name="txt_cetak">Cetak</string>
 </resources>

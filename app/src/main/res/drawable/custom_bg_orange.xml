@@ -11,5 +11,5 @@
         android:drawable="@drawable/card_custom_bg_2" />
 
     <!-- Default, "just hangin' out" state. -->
-    <item android:drawable="@drawable/card_custom_bg" />
+    <item android:drawable="@drawable/card_custom_bg_orange" />
 </selector>

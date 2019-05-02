@@ -1,8 +1,8 @@
 package ahafidz.com.myapplication.client;
 
-import java.util.List;
-
 import ahafidz.com.myapplication.bean.CategoryReadResponse;
+import ahafidz.com.myapplication.bean.CreateDataRequest;
+import ahafidz.com.myapplication.bean.CreateResponse;
 import ahafidz.com.myapplication.bean.Login;
 import ahafidz.com.myapplication.bean.LoginResponse;
 import ahafidz.com.myapplication.bean.ValidateResponse;
@@ -27,5 +27,14 @@ public interface ApiInterface {
 
     @GET("kategori/read.php")
     Call<CategoryReadResponse> doReadCategory();
+
+    @POST("kategori/create.php")
+    Call<CreateResponse> doCreateCategory(@Body CreateDataRequest request);
+
+    @POST("kategori/update.php")
+    Call<CreateResponse> doUpdateCategory(@Body CreateDataRequest request);
+
+    @POST("kategori/delete.php")
+    Call<CreateResponse> doDeleteCategory(@Body CreateDataRequest request);
 
 }

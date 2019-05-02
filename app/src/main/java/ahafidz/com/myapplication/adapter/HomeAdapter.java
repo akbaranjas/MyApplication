@@ -2,22 +2,28 @@ package ahafidz.com.myapplication.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import java.util.List;
 
 import ahafidz.com.myapplication.R;
 import ahafidz.com.myapplication.bean.Record;
+import ahafidz.com.myapplication.listener.OnSelectListListener;
+import ahafidz.com.myapplication.util.Constant;
 
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> {
 
     private Context mContext;
     private List<Record> records;
+    private OnSelectListListener onSelectListListener;
 
-    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class MyViewHolder extends RecyclerView.ViewHolder {
 
         private TextView id;
         private TextView kode;
@@ -27,9 +33,11 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
         private TextView dirubahOleh;
         private TextView tglDibuat;
         private TextView tglDirubah;
+        private TextView textViewOption;
 
         public MyViewHolder(View view) {
             super(view);
+            textViewOption = view.findViewById(R.id.textViewOptions);
             id = view.findViewById(R.id.R1);
             kode = view.findViewById(R.id.R2);
             nama = view.findViewById(R.id.R3);
@@ -40,16 +48,13 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
             tglDirubah = view.findViewById(R.id.R8);
         }
 
-        @Override
-        public void onClick(View v) {
-
-        }
     }
 
 
-    public HomeAdapter(Context mContext, List<Record> records) {
+    public HomeAdapter(Context mContext, List<Record> records, OnSelectListListener listener) {
         this.mContext = mContext;
         this.records = records;
+        this.onSelectListListener = listener;
     }
 
     @Override
@@ -62,9 +67,9 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
-        Record record = records.get(position);
+        final Record record = records.get(position);
 
-        holder.id.setText(record.getId());
+        holder.id.setText(String.valueOf(record.getId()));
         holder.kode.setText(record.getKode());
         holder.nama.setText(record.getNama());
         holder.keterangan.setText(record.getKeterangan());
@@ -72,6 +77,34 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
         holder.dirubahOleh.setText(record.getDirubahOleh());
         holder.tglDibuat.setText(record.getTglDibuat());
         holder.tglDirubah.setText(record.getTglDirubah());
+
+        holder.textViewOption.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                PopupMenu popup = new PopupMenu(mContext, holder.textViewOption);
+                popup.inflate(R.menu.list_option_menu);
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.edit_menu:
+                                onSelectListListener.onSelect(Constant.TITLE_UPDATE, record);
+                                break;
+                            case R.id.delete_menu:
+                                onSelectListListener.onSelect(Constant.TITLE_DELETE, record);
+                                break;
+                            case R.id.print_menu:
+                                onSelectListListener.onSelect(Constant.TITLE_PRINT, record);
+                                break;
+                        }
+                        return false;
+                    }
+                });
+                popup.show();
+            }
+        });
 
     }
 

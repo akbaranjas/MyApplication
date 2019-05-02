@@ -37,6 +37,27 @@ public class RealmHelper {
         return users;
     }
 
+    public String getJwt() {
+        Realm realm = null;
+        String jwt = "";
+        try {
+            realm = Realm.getDefaultInstance();
+            RealmResults<User> resUser = realm.where(User.class).findAll();
+            if (resUser.size() > 0) {
+                jwt = resUser.get(0).getJwt();
+            }
+        }catch (Exception e){
+            Log.e(TAG, e.getMessage());
+        }finally {
+            if(realm != null){
+                realm.close();
+            }
+        }
+
+        return jwt;
+    }
+
+
     public void insertUser(ValidateData data, String jwt){
         Realm realm = null;
 
@@ -63,8 +84,9 @@ public class RealmHelper {
 
     public void deleteUser(){
         Realm realm = null;
-        realm = Realm.getDefaultInstance();
+
         try{
+            realm = Realm.getDefaultInstance();
             realm.beginTransaction();
             realm.deleteAll();
             realm.commitTransaction();
