@@ -4,7 +4,9 @@ package ahafidz.com.myapplication.bean;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Record {
+import java.io.Serializable;
+
+public class Record implements Serializable {
 
     @SerializedName("id")
     @Expose

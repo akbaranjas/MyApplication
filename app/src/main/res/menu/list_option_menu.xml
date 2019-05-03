@@ -9,8 +9,4 @@
         android:id="@+id/delete_menu"
         android:title="@string/txt_hapus" />
 
-    <item
-        android:id="@+id/print_menu"
-        android:title="@string/txt_cetak" />
-
 </menu>

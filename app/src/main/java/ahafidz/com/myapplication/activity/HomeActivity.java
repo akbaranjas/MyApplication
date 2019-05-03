@@ -11,8 +11,10 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -24,6 +26,7 @@ import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +40,7 @@ import ahafidz.com.myapplication.listener.OnSelectListListener;
 import ahafidz.com.myapplication.presenter.HomePresenter;
 import ahafidz.com.myapplication.presenter.HomePresenterImpl;
 import ahafidz.com.myapplication.util.Constant;
+import ahafidz.com.myapplication.util.RecyclerItemClickListener;
 import ahafidz.com.myapplication.util.Utils;
 import ahafidz.com.myapplication.view.HomeView;
 
@@ -49,7 +53,9 @@ public class HomeActivity extends AppCompatActivity implements HomeView, SwipeRe
     private SwipeRefreshLayout swipeRefresh;
     private HomePresenter presenter;
     private HomeAdapter adapter;
+    boolean isMultiSelect = false;
     private List<Record> record = new ArrayList<>();
+    private List<Record> selected_record = new ArrayList<>();
     private ConstraintLayout view;
     private AlertDialog dialog;
     private LayoutInflater inflater;
@@ -61,6 +67,8 @@ public class HomeActivity extends AppCompatActivity implements HomeView, SwipeRe
     private TextView textTitle;
     private String titles;
     private CreateDataRequest dataRequest = null;
+    private ActionMode mActionMode;
+    private Menu context_menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,12 +89,31 @@ public class HomeActivity extends AppCompatActivity implements HomeView, SwipeRe
         validator = new Validator(this);
         validator.setValidationListener(this);
 
-        adapter = new HomeAdapter(this,record, this);
+        adapter = new HomeAdapter(0,this,record, this.selected_record, this);
         recyclerView.setAdapter(adapter);
 
-//        RealmHelper helper = new RealmHelper();
-//        jwt = helper.getJwt();
-//        Log.d("JWT", jwt);
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                if (isMultiSelect)
+                    multi_select(position);
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+                if (!isMultiSelect) {
+                    selected_record = new ArrayList<>();
+                    isMultiSelect = true;
+
+                    if (mActionMode == null) {
+                        mActionMode = startActionMode(mActionModeCallback);
+                    }
+                }
+
+                multi_select(position);
+
+            }
+        }));
 
         presenter = new HomePresenterImpl(this);
 
@@ -168,6 +195,25 @@ public class HomeActivity extends AppCompatActivity implements HomeView, SwipeRe
             presenter.logout();
         }else if(title.equals(Constant.TITLE_DELETE)){
             presenter.deleteData(dataRequest);
+        }else if(title.equals(Constant.TITLE_PRINT)){
+            if(selected_record.size()>0)
+            {
+//                for(int i=0;i<selected_record.size();i++)
+//                    //user_list.remove(multiselect_list.get(i));
+//                    Log.d("TAG", selected_record.get(i).getKode());
+////                    Toast.makeText(getApplicationContext(), selected_record.get(i).getKode(), Toast.LENGTH_SHORT).show();
+//                //multiSelectAdapter.notifyDataSetChanged();
+                Intent printIntent = new Intent(this, PrintActivity.class);
+                printIntent.putExtra("LIST", (Serializable) selected_record);
+                startActivity(printIntent);
+
+
+                if (mActionMode != null) {
+                    mActionMode.finish();
+                }
+
+//                Toast.makeText(getApplicationContext(), "Delete Click", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -264,4 +310,65 @@ public class HomeActivity extends AppCompatActivity implements HomeView, SwipeRe
             Utils.showConfirmDialog(this,this, Constant.TITLE_DELETE);
         }
     }
+
+    public void multi_select(int position) {
+        if (mActionMode != null) {
+            if (selected_record.contains(record.get(position)))
+                selected_record.remove(record.get(position));
+            else
+                selected_record.add(record.get(position));
+
+            if (selected_record.size() > 0)
+                mActionMode.setTitle("" + selected_record.size());
+            else
+                mActionMode.setTitle("");
+
+            refreshAdapter();
+
+        }
+    }
+
+    private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
+
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            // Inflate a menu resource providing context menu items
+            MenuInflater inflater = mode.getMenuInflater();
+            inflater.inflate(R.menu.multiselect_menu, menu);
+            context_menu = menu;
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return false; // Return false if nothing is done
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.action_print:
+                    Utils.showConfirmDialog(HomeActivity.this,HomeActivity.this,Constant.TITLE_PRINT);
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+            mActionMode = null;
+            isMultiSelect = false;
+            selected_record = new ArrayList<>();
+            refreshAdapter();
+        }
+    };
+
+    void refreshAdapter()
+    {
+        adapter.selected_records=selected_record;
+        adapter.records=record;
+        adapter.notifyDataSetChanged();
+    }
+
 }

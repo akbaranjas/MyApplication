@@ -1,8 +1,9 @@
 package ahafidz.com.myapplication.adapter;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,8 +21,10 @@ import ahafidz.com.myapplication.util.Constant;
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> {
 
     private Context mContext;
-    private List<Record> records;
+    public List<Record> records;
+    public List<Record> selected_records;
     private OnSelectListListener onSelectListListener;
+    Integer type;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
@@ -34,6 +37,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
         private TextView tglDibuat;
         private TextView tglDirubah;
         private TextView textViewOption;
+        private CardView cardView;
 
         public MyViewHolder(View view) {
             super(view);
@@ -46,14 +50,17 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
             dirubahOleh = view.findViewById(R.id.R6);
             tglDibuat = view.findViewById(R.id.R7);
             tglDirubah = view.findViewById(R.id.R8);
+            cardView = view.findViewById(R.id.card_view);
         }
 
     }
 
 
-    public HomeAdapter(Context mContext, List<Record> records, OnSelectListListener listener) {
+    public HomeAdapter(Integer type, Context mContext, List<Record> records, List<Record> selected_records, OnSelectListListener listener) {
+        this.type = type;
         this.mContext = mContext;
         this.records = records;
+        this.selected_records = selected_records;
         this.onSelectListListener = listener;
     }
 
@@ -78,6 +85,17 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
         holder.tglDibuat.setText(record.getTglDibuat());
         holder.tglDirubah.setText(record.getTglDirubah());
 
+        if(type == 1){
+            holder.textViewOption.setVisibility(View.INVISIBLE);
+        }else{
+            holder.textViewOption.setVisibility(View.VISIBLE);
+        }
+
+        if(selected_records.contains(record))
+            holder.cardView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.list_item_selected_state));
+        else
+            holder.cardView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.list_item_normal_state));
+
         holder.textViewOption.setOnClickListener(new View.OnClickListener(){
 
             @Override
@@ -94,9 +112,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
                                 break;
                             case R.id.delete_menu:
                                 onSelectListListener.onSelect(Constant.TITLE_DELETE, record);
-                                break;
-                            case R.id.print_menu:
-                                onSelectListListener.onSelect(Constant.TITLE_PRINT, record);
                                 break;
                         }
                         return false;

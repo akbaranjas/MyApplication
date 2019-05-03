@@ -16,4 +16,5 @@
     <string name="txt_ubah">Ubah</string>
     <string name="txt_hapus">Hapus</string>
     <string name="txt_cetak">Cetak</string>
+    <string name="txt_print">Print</string>
 </resources>
