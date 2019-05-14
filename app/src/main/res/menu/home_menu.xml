@@ -3,6 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=
         ".MenuExampleActivity" >
+
+    <item android:id="@+id/menu_upload"
+        android:icon="@drawable/ic_upload"
+        android:title="@string/txt_upload"
+        app:showAsAction="ifRoom"/>
+
     <item
         android:id="@+id/menu_logout"
         android:orderInCategory="1"

@@ -183,6 +183,10 @@ public class HomeActivity extends AppCompatActivity implements HomeView, SwipeRe
             case R.id.menu_logout:
                 Utils.showConfirmDialog(this,this, Constant.TITLE_LOGOUT);
                 break;
+            case R.id.menu_upload:
+                Intent i = new Intent(HomeActivity.this, UploadActivity.class);
+                startActivity(i);
+                break;
         }
         return super.onOptionsItemSelected(item);
 

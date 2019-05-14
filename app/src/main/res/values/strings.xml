@@ -17,4 +17,7 @@
     <string name="txt_hapus">Hapus</string>
     <string name="txt_cetak">Cetak</string>
     <string name="txt_print">Print</string>
+    <string name="txt_upload">Upload</string>
+    <string name="txt_kategori">Kategori</string>
+    <string name="txt_choose_photo">Choose Photo</string>
 </resources>

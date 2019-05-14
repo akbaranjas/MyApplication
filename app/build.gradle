@@ -6,7 +6,7 @@ android {
         applicationId "ahafidz.com.myapplication"
         minSdkVersion 15
         targetSdkVersion 28
-        versionCode 1
+        versionCode 1000
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField "String", "BASE_URL", "\"http://apps.ahafidz.com/api/\""
@@ -17,8 +17,34 @@ android {
         release {
             minifyEnabled true
             shrinkResources true
-            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    // APK splitting
+    splits {
+        abi {
+            // Enable APK splitting wrt architecture
+            enable true
+
+            // Reset the architectures for which you need to build the APKs for
+            reset()
+
+            // Include the architectures for which Gradle is building APKs
+            include 'x86', 'x86_64', 'armeabi-v7a', 'arm64-v8a'
+
+            // Set this to false if you don't want an APK that has native code for all architectures
+            universalApk false
+        }
+    }
+
+    // Assign codes to each architecture
+    project.ext.versionCodes = ['x86': 0, 'x86_64': 1, 'armeabi-v7a': 2, 'arm64-v8a': 3]
+
+    // Add the architecture-specific codes above to base version code, i.e. the version code specified in the defaultConfig{} block
+    // Example: 2000 is the base version code -> 2000 (x86), 2001 (x86_64), 2002 (armeabi-v7a) & 2003 (arm64-v8a) would be the version codes for the generated APK files
+    android.applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            output.versionCodeOverride = project.ext.versionCodes.get(output.getFilter(com.android.build.OutputFile.ABI), 0) * 1 + android.defaultConfig.versionCode
         }
     }
 }
@@ -37,7 +63,6 @@ dependencies {
     // rxandroid
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.12.0'
-    implementation 'com.android.support:recyclerview-selection:28.0.0'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'

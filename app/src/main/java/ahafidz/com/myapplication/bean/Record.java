@@ -137,4 +137,9 @@ public class Record implements Serializable {
         return this;
     }
 
+    @Override
+    public String toString() {
+        return nama;
+    }
+
 }

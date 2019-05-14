@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +16,7 @@ import java.util.List;
 
 import ahafidz.com.myapplication.R;
 import ahafidz.com.myapplication.listener.ConfirmDialogListener;
+import okhttp3.RequestBody;
 
 public class Utils {
 
@@ -232,6 +234,12 @@ public class Utils {
 
     private static byte charToByte(char c) {
         return (byte) "0123456789ABCDEF".indexOf(c);
+    }
+
+    @NonNull
+    public static RequestBody createPartFromString(String descriptionString) {
+        return RequestBody.create(
+                okhttp3.MultipartBody.FORM, descriptionString);
     }
 
 }
