@@ -23,12 +23,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 
 import ahafidz.com.myapplication.R;
 import ahafidz.com.myapplication.bean.Record;
 import ahafidz.com.myapplication.bean.UploadResponse;
+import ahafidz.com.myapplication.bean.Uploaded;
 import ahafidz.com.myapplication.presenter.UploadPresenter;
 import ahafidz.com.myapplication.presenter.UploadPresenterImpl;
 import ahafidz.com.myapplication.util.FileUtils;
@@ -162,14 +164,15 @@ public class UploadActivity extends AppCompatActivity implements UploadView {
     }
 
     @Override
-    public void onSuccess(String message) {
-        Toast.makeText(this, "Upload berhasil, file name : " + message, Toast.LENGTH_LONG).show();
+    public void onSuccess(Uploaded result) {
+        Toast.makeText(this, "Upload berhasil, file name : " + result.getFile(), Toast.LENGTH_LONG).show();
         Intent i = new Intent(UploadActivity.this, ImagePreviewActivity.class);
-        i.putExtra("filename", message);
+        i.putExtra("filename", (Serializable) result);
         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
         finish();
     }
+
 
     @Override
     public void upload(UploadResponse response) {
